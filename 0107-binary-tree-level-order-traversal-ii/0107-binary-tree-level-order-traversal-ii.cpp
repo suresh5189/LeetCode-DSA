@@ -11,8 +11,17 @@
  */
 class Solution {
 public:
+    int maxHeight(TreeNode* root){
+        if(root == NULL) return 0;
+        int lh = maxHeight(root->left);
+        int rh = maxHeight(root->right);
+        return 1+max(lh,rh);
+    }
+public:
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        vector<vector<int>>ans;
+        int h = maxHeight(root);
+        vector<vector<int>>ans(h);
+        h--;
         if(root == NULL) return ans;
         queue<TreeNode*>q;
         q.push(root);
@@ -26,9 +35,10 @@ public:
             if(node->right != NULL) q.push(node->right);
             level.push_back(node->val);
             }
-            ans.push_back(level);
+            // ans.push_back(level);
+            ans[h--] = level;
         }
-            reverse(ans.begin(),ans.end());
+            // reverse(ans.begin(),ans.end());
         return ans;
     }
 };
